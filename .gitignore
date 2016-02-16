@@ -30,3 +30,15 @@ app/Plugin/DistributeModule
 app/Plugin/EventcorrelationModule
 app/Plugin/IdoitModule
 app/Plugin/MkModule
+app/webroot/admin
+app/webroot/autoreport_module
+app/webroot/chat_module
+app/webroot/debug_kit
+app/webroot/distribute_module
+app/webroot/eventcorrelation_module
+app/webroot/example_module
+app/webroot/frontend
+app/webroot/idoit_module
+app/webroot/map_module
+app/webroot/mk_module
+app/webroot/nagios_module
