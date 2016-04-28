@@ -2,7 +2,7 @@
 $this->Frontend->init($frontendData);
 if(Configure::read('debug') == 0 && file_exists(WWW_ROOT . 'js/app_build.js') && file_exists(WWW_ROOT . 'css/app_build.css')) {
 ?>
-<link rel="stylesheet" type="text/css" href="/js/app_build.css" />
+<link rel="stylesheet" type="text/css" href="/css/app_build.css" />
 <script type="text/javascript" src="/js/app_build.js"></script>
 <?php
 } else {
