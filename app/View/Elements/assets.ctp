@@ -7,7 +7,7 @@ if(Configure::read('debug') == 0 && file_exists(WWW_ROOT . 'js/app_build.js') &&
 <?php
 } else {
 ?>
-<link rel="stylesheet" type="text/css" href="/js/assets.css" />
+<link rel="stylesheet" type="text/css" href="/css/assets.css" />
 <script type="text/javascript" src="/js/assets.js"></script>
 <?php
 }
