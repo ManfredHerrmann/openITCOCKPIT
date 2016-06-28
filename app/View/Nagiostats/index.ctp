@@ -163,11 +163,11 @@ $this->Paginator->options(array('url' => $this->params['named']));
                                                         </tr>
                                                         <tr>
                                                             <td><?php echo __('State changes'); ?></td>
-                                                            <td nagiostats="MINACTSVCPSC" unit="%"
+                                                            <td nagiostats="MINACTSVCPSC" unit="%">
                                                             </td>
-                                                            <td nagiostats="MAXACTSVCPSC" unit="%"
+                                                            <td nagiostats="MAXACTSVCPSC" unit="%">
                                                             </td>
-                                                            <td nagiostats="AVGACTSVCPSC" unit="%"
+                                                            <td nagiostats="AVGACTSVCPSC" unit="%">
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -260,28 +260,24 @@ $this->Paginator->options(array('url' => $this->params['named']));
                                                             <td><= 1 <?php echo __('minute'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMSVCPSVCHK1M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMSVCPSVCHK1M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 5 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMSVCPSVCHK5M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMSVCPSVCHK5M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 15 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMSVCPSVCHK15M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMSVCPSVCHK15M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 60 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMSVCPSVCHK60M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMSVCPSVCHK60M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -482,28 +478,24 @@ $this->Paginator->options(array('url' => $this->params['named']));
                                                             <td><= 1 <?php echo __('minute'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMHSTPSVCHK1M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMHSTPSVCHK1M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 5 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMHSTPSVCHK5M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMHSTPSVCHK5M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 15 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMHSTPSVCHK15M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMHSTPSVCHK15M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><= 60 <?php echo __('minutes'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMHSTPSVCHK60M" unit=""></span>
-                                                                (<span nagiostats="PCTNUMHSTPSVCHK60M" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         </tbody>

@@ -68,17 +68,17 @@ App.Controllers.NagiostatsIndexController = Frontend.AppController.extend({
         var unit = $object.attr('unit');
         value = payload[key];
 
-        if (key.substring(0, 8) == 'PCTNUMSVC') {
+        if (key.substring(0, 9) == 'PCTNUMSVC') {
             if(payload['NUMSERVICES'] > 0) {
-                value = payload[key.substring(8)] / payload['NUMSERVICES'] * 100;
+                value = payload[key.substring(9)] / payload['NUMSERVICES'] * 100;
             } else {
                 value = 0;
             }
         }
 
-        if (key.substring(0, 8) == 'PCTNUMHST') {
+        if (key.substring(0, 9) == 'PCTNUMHST') {
             if(payload['NUMHOSTS'] > 0) {
-                value = payload[key.substring(8)] / payload['NUMHOSTS'] * 100;
+                value = payload[key.substring(9)] / payload['NUMHOSTS'] * 100;
             } else {
                 value = 0;
             }
