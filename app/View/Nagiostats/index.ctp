@@ -113,6 +113,7 @@ $this->Paginator->options(array('url' => $this->params['named']));
                                                             <td><?php echo __('Since start'); ?></td>
                                                             <td>
                                                                 <span nagiostats="NUMSVCCHECKED" unit="" critical="0"></span>
+                                                                (<span nagiostats="PCTNUMSVCCHECKED" unit="%"></span>)
                                                             </td>
                                                         </tr>
                                                         </tbody>
