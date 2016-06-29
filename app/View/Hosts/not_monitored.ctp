@@ -80,20 +80,20 @@
 					<ul class="nav nav-tabs pull-right" id="widget-tab-1">
 						<?php if($this->Acl->hasPermission('index')):?>
 							<li class="">
-								<a href="/hosts/index"><i class="fa fa-stethoscope"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Monitored'); ?> </span> </a>
+								<a href="/hosts/index<?php if (isset($hostFilter)){echo $hostFilter;}?>"><i class="fa fa-stethoscope"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Monitored'); ?> </span> </a>
 							</li>
 						<?php endif;?>
 						<li class="active">
-							<a href="/hosts/notMonitored"><i class="fa fa-user-md"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Not monitored'); ?> </span></a>
+							<a href="/hosts/notMonitored<?php if (isset($hostFilter)){echo $hostFilter;}?>"><i class="fa fa-user-md"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Not monitored'); ?> </span></a>
 						</li>
 						<?php if($this->Acl->hasPermission('disabled')):?>
 							<li>
-								<a href="/hosts/disabled"><i class="fa fa-power-off"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Disabled'); ?> </span></a>
+								<a href="/hosts/disabled<?php if (isset($hostFilter)){echo $hostFilter;}?>"><i class="fa fa-power-off"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Disabled'); ?> </span></a>
 							</li>
 						<?php endif;?>
 						<?php if($this->Acl->hasPermission('index', 'DeletedHosts')):?>
 							<li>
-								<a href="/deleted_hosts/index"><i class="fa fa-trash-o"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Deleted'); ?> </span></a>
+								<a href="/deleted_hosts/index<?php if (isset($deletedHostFilter)){echo $deletedHostFilter;}?>"><i class="fa fa-trash-o"></i> <span class="hidden-mobile hidden-tablet"> <?php echo __('Deleted'); ?> </span></a>
 							</li>
 						<?php endif;?>
 					</ul>

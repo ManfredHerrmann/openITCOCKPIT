@@ -62,7 +62,9 @@ class ListFilterHelper extends AppHelper {
 		if(empty($options)) {
 			$options = $this->filters['field'];
 		}
-		if(!$options['showFormField']) continue;
+		if(!$options['showFormField']) {
+			//continue;
+		}
 
 		$ret = '';
 		if(isset($options['hidden'])){
@@ -248,11 +250,16 @@ class ListFilterHelper extends AppHelper {
 		if(isset($this->_options['formActionParams']['merge']) && $this->_options['formActionParams']['merge'] == false){
 			$options = $this->_options['formActionParams'];
 		}else{
-			$here = $this->here;
-			if($this->request->params['action'] == 'index' || $this->request->params['action'] == ''){
+            
+            $here = $this->here;
+
+            if($this->request->params['action'] == 'index' || $this->request->params['action'] == ''){
 				//CakePHP remove index action from url by default
 				//This cause some strange behavior...
-				$here = $here . '/index';
+				//Only add index if does not exist
+                if (strpos($here, "/index")  === 0) {
+                    $here = $here . '/index';
+                }
 			}
 			$options = Set::merge(array('url' => $here), $this->_options['formActionParams']);
 		}

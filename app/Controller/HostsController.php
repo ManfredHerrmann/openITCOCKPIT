@@ -149,17 +149,17 @@ class HostsController extends AppController{
 
 	public function index(){
 		$this->__unbindAssociations('Service');
-
-		$conditions = [];
+        //https://172.16.92.30/hosts/index?Filter.Host.address=127.0.0.1
+        debug($this->request->query['Filter_Host_address']);
+        die();
+        $conditions = [];
 		if(!isset($this->request->params['named']['BrowserContainerId'])){
 			$conditions = [
 				'Host.disabled' => 0,
 				'HostsToContainers.container_id' => $this->MY_RIGHTS,
 			];
 		}
-
 		$conditions = $this->ListFilter->buildConditions([], $conditions);
-
 		$childrenContainer = [];
 		if(isset($this->request->params['named']['BrowserContainerId'])){
 			if(!is_array($this->request->params['named']['BrowserContainerId'])){
@@ -320,7 +320,16 @@ class HostsController extends AppController{
 		//Aufruf für json oder xml view: /nagios_module/hosts.json oder /nagios_module/hosts.xml
 		$this->set('_serialize', ['all_hosts']);
 		if(isset($this->request->data['Filter']) && $this->request->data['Filter'] !== null){
-			if(isset($this->request->data['Filter']['HostStatus']['current_state'])){
+            if (isset($this->request->data['Filter']['Host'])) {
+                $key = key($this->request->data['Filter']['Host']);
+                $this->set('hostFilter', "/Filter.Host.".$key.":".$this->request->data['Filter']['Host'][$key]);
+                $this->set('deletedHostFilter', "/Filter.DeletedHost.".$key.":".$this->request->data['Filter']['Host'][$key]);
+            } else {
+                $this->set('hostFilter', "");
+                $this->set('deletedHosstFilter', "");
+            }
+
+            if(isset($this->request->data['Filter']['HostStatus']['current_state'])){
 				//$this->set('HostStatus.current_state', $this->request->data['Filter']['HostStatus']['current_state']);
 			}else{
 				$this->set('HostStatus.current_state', []);
@@ -466,8 +475,18 @@ class HostsController extends AppController{
 		$this->set(compact(['all_hosts', 'hoststatus', 'masterInstance', 'SatelliteNames']));
 		//Aufruf für json oder xml view: /nagios_module/hosts.json oder /nagios_module/hosts.xml
 		$this->set('_serialize', ['all_hosts']);
+
 		if(isset($this->request->data['Filter']) && $this->request->data['Filter'] !== null){
-			if(isset($this->request->data['Filter']['HostStatus']['current_state'])){
+            if (isset($this->request->data['Filter']['Host'])) {
+                $key = key($this->request->data['Filter']['Host']);
+                $this->set('hostFilter', "/Filter.Host.".$key.":".$this->request->data['Filter']['Host'][$key]);
+                $this->set('deletedHostFilter', "/Filter.DeletedHost.".$key.":".$this->request->data['Filter']['Host'][$key]);
+            } else {
+                $this->set('hostFilter', "");
+                $this->set('deletedHosstFilter', "");
+            }
+
+            if(isset($this->request->data['Filter']['HostStatus']['current_state'])){
 				//$this->set('HostStatus.current_state', $this->request->data['Filter']['HostStatus']['current_state']);
 			}else{
 				$this->set('HostStatus.current_state', []);
@@ -1450,7 +1469,15 @@ class HostsController extends AppController{
 		$this->set('_serialize', ['disabledHosts']);
 
 		if(isset($this->request->data['Filter']) && $this->request->data['Filter'] !== null){
-			$this->set('isFilter', true);
+            if (isset($this->request->data['Filter']['Host'])) {
+                $key = key($this->request->data['Filter']['Host']);
+                $this->set('hostFilter', "/Filter.Host.".$key.":".$this->request->data['Filter']['Host'][$key]);
+                $this->set('deletedHostFilter', "/Filter.DeletedHost.".$key.":".$this->request->data['Filter']['Host'][$key]);
+            } else {
+                $this->set('hostFilter', "");
+                $this->set('deletedHosstFilter', "");
+            }
+            $this->set('isFilter', true);
 		}else{
 			$this->set('isFilter', false);
 		}

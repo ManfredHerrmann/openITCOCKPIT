@@ -58,6 +58,14 @@ class DeletedHostsController extends AppController{
 		$this->set('_serialize', ['deletedHosts']);
 		
 		if(isset($this->request->data['Filter']) && $this->request->data['Filter'] !== null){
+            if (isset($this->request->data['Filter']['DeletedHost'])) {
+                $key = key($this->request->data['Filter']['DeletedHost']);
+                $this->set('hostFilter', "/Filter.Host.".$key.":".$this->request->data['Filter']['DeletedHost'][$key]);
+                $this->set('deletedHostFilter', "/Filter.DeletedHost.".$key.":".$this->request->data['Filter']['DeletedHost'][$key]);
+            } else {
+                $this->set('hostFilter', "");
+                $this->set('deletedHosstFilter', "");
+            }
 			$this->set('isFilter', true);
 		}else{
 			$this->set('isFilter', false);

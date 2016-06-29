@@ -5,7 +5,7 @@ class ListFilterComponent extends Component {
 
 	// Referenz auf den aufrufenden Controller
 	private $Controller;
-
+    private $filterParam = null;
 	public function initialize(Controller $controller, $settings = array()) {
 		$this->settings = Set::merge($this->settings, $settings);
 		$this->Controller = $controller;
@@ -28,16 +28,14 @@ class ListFilterComponent extends Component {
 	);
 
 	public function startup(Controller $controller) {
-		//debug($this->Controller->data);
-		if(isset($this->Controller->listFilters[$this->Controller->action])) {
-
+        if(isset($this->Controller->listFilters[$this->Controller->action])) {
 			$this->listFilters = $this->Controller->listFilters[$this->Controller->action];
 			// POST-Daten in URL umwandeln und weiterleiten
 			if(!empty($this->Controller->data['Filter'])) {
 				$urlParams = array();
 				foreach($this->Controller->data['Filter'] as $model => $fields) {
 					foreach($fields as $field => $value) {
-						if(is_array($value)) {
+                        if(is_array($value)) {
 							if(isset($value['year']) && isset($value['month'])){
 								$value = "{$value['year']}-{$value['month']}-{$value['day']}";
 							}else{
@@ -57,25 +55,22 @@ class ListFilterComponent extends Component {
 							if($value == '--') continue;
 						}
 						$value = trim($value);
-
 						/*if($value !== 0 && $value !== '0' && empty($value)) {
 							continue;
 						}*/
 
 						if(strlen($value)>0){
 							$urlParams["Filter.{$model}.{$field}"] = $value;
+                            $this->filterParam["Filter.{$model}.{$field}"] = $value;
 						}
-
 					}
 				}
-
 				//Fix by Daniel Ziegler <daniel.ziegler@it-novum.com> to avoid lost URL parameters - 26.08.2014
 				if(isset($this->Controller->request->params['pass']) && !empty($this->Controller->request->params['pass'])){
 					$urlParams = Hash::merge($urlParams, $this->Controller->request->params['pass']);
 				}
-
 				if(isset($this->Controller->request->params['named']) && !empty($this->Controller->request->params['named'])){
-					$_namedParameters = [];
+                    $_namedParameters = [];
 					foreach($this->Controller->request->params['named'] as $_key => $_param){
 						if(substr($_key, 0, 7) == 'Filter.'){
 							//Ignoring ListFilter parameters
@@ -92,24 +87,17 @@ class ListFilterComponent extends Component {
 					$urlParams = Hash::merge($urlParams, $_namedParameters);
 				}
 
-				//debug($this->Controller->request->params);
-				//die();
-
-				//debug($this->Controller->request->params);
-				//debug($urlParams);die();
-
 				$this->Controller->redirect(Router::url($urlParams));
 			}
+
 			// Filtereinstellungen aus URL aufbereiten
 			$filterActive = false;
-
 			if(!empty($this->Controller->passedArgs)) {
 				$filters = array();
 				foreach($this->Controller->passedArgs as $arg => $value) {
 					if(substr($arg, 0, 7) == 'Filter.') {
 						unset($betweenDate);
 						list($filter, $model, $field) = explode('.', $arg);
-
 						if(substr($arg, -1) == ']') {
 							if(preg_match('/^(.*)\[\d+\]$/', $arg, $matches)) {
 								$fieldArg = $matches[1];
