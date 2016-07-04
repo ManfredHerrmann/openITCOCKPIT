@@ -54,10 +54,10 @@ App.Controllers.NagiostatsIndexController = Frontend.AppController.extend({
                 this.updateValues(key, transmitted.payload[key]);
             }
             for (var key in {'PCTNUMSVCACTCHK1M': 0, 'PCTNUMSVCACTCHK5M': 0, 'PCTNUMSVCACTCHK15M': 0, 'PCTNUMSVCACTCHK60M': 0, 'PCTNUMSVCCHECKED': 0}) {
-                this.updateValues(key, (transmitted.payload[key.substring(3)] / transmitted.payload['NUMSERVICES'] * 100))
+                this.updateValues(key, Math.round(transmitted.payload[key.substring(3)] / transmitted.payload['NUMSERVICES'] * 100).toFixed(2));
             }
             for (var key in {'PCTNUMHSTACTCHK1M': 0, 'PCTNUMHSTACTCHK5M': 0, 'PCTNUMHSTACTCHK15M': 0, 'PCTNUMHSTACTCHK60M': 0, 'PCTNUMHSTCHECKED': 0}) {
-                this.updateValues(key, (transmitted.payload[key.substring(3)] / transmitted.payload['NUMHOSTS'] * 100))
+                this.updateValues(key, Math.round(transmitted.payload[key.substring(3)] / transmitted.payload['NUMHOSTS'] * 100).toFixed(2));
             }
             this.Ajaxloader.hide();
         }.bind(this);
