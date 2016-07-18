@@ -42,7 +42,9 @@ App.Controllers.HostgroupsIndexController = Frontend.AppController.extend({
 		});
 
 		$('#hostgroup_list').dataTable({
-			"bPaginate": false,
+			"bLengthChange" : false,
+			"bPaginate": true,
+			"iDisplayLength" : 25,
 			"bFilter": false,
 			"bInfo": false,
 			"bStateSave": true,
