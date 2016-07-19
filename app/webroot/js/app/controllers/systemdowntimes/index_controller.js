@@ -27,6 +27,10 @@ App.Controllers.SystemdowntimesIndexController = Frontend.AppController.extend({
 
 	_initialize: function() {
 		var self = this;
+
+		// getting from global index
+		localStorage.setItem(self.getCurrentStorageIndex(), localStorage.getItem(self.getIndexGlobal()));
+
 		$('.select_datatable').click(function(){
 			self.fnShowHide($(this).attr('my-column'), $(this).children());
 		});
@@ -106,5 +110,19 @@ App.Controllers.SystemdowntimesIndexController = Frontend.AppController.extend({
 			inputObject.prop('checked', true);
 		}
 		oTable.fnSetColumnVis( iCol, bVis ? false : true );
+		// updating global index
+		var changedLocalStorage = localStorage.getItem(this.getCurrentStorageIndex());
+		localStorage.setItem(this.getIndexGlobal(), changedLocalStorage);
+	},
+	getCurrentStorageIndex: function(){
+		var mainPart = this.getIndexBeginning();
+		var localStorageIn = window.location.href.replace(appData.webroot, mainPart);
+		return localStorageIn;
+	},
+	getIndexBeginning: function (){
+		return 'DataTables_recurringdowntimes_list_/';
+	},
+	getIndexGlobal: function(){
+		return this.getIndexBeginning() + 'storageMainHolderUnique';
 	}
 });

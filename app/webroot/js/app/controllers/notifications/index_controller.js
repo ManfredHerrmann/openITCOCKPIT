@@ -27,12 +27,16 @@ App.Controllers.NotificationsIndexController = Frontend.AppController.extend({
 
 	_initialize: function() {
 		var self = this;
+
+		// getting from global index
+		localStorage.setItem(self.getCurrentStorageIndex(), localStorage.getItem(self.getIndexGlobal()));
+
 		//this.showHostOrService(this.getVar('HostOrService'));
 		$('.select_datatable').click(function(){
 			self.fnShowHide($(this).attr('my-column'), $(this).children());
 		});
 
-		$('#host_list').dataTable({
+		$('#notification_list').dataTable({
 			"bPaginate": false,
 			"bFilter": false,
 			"bInfo": false,
@@ -63,7 +67,7 @@ App.Controllers.NotificationsIndexController = Frontend.AppController.extend({
 			}
 		});
 
-		this.$table = $('#host_list');
+		this.$table = $('#notification_list');
 
 		
 		/*
@@ -108,6 +112,20 @@ App.Controllers.NotificationsIndexController = Frontend.AppController.extend({
 			inputObject.prop('checked', true);
 		}
 		oTable.fnSetColumnVis( iCol, bVis ? false : true );
+		// updating global index
+		var changedLocalStorage = localStorage.getItem(this.getCurrentStorageIndex());
+		localStorage.setItem(this.getIndexGlobal(), changedLocalStorage);
+	},
+	getCurrentStorageIndex: function(){
+		var mainPart = this.getIndexBeginning();
+		var localStorageIn = window.location.href.replace(appData.webroot, mainPart);
+		return localStorageIn;
+	},
+	getIndexBeginning: function (){
+		return 'DataTables_notification_list_/';
+	},
+	getIndexGlobal: function(){
+		return this.getIndexBeginning() + 'storageMainHolderUnique';
 	},
 	
 	showHostOrService: function(value){

@@ -33,37 +33,57 @@ App.Controllers.HostgroupsIndexController = Frontend.AppController.extend({
 
 	_initialize: function() {
 		var self = this;
+
+		// getting from global index
+		localStorage.setItem(self.getCurrentStorageIndex(), localStorage.getItem(self.getIndexGlobal()));
+
 		this.Masschange.setup({
 			'controller': 'hostgroups',
 			'checkboxattr': 'hostgroupname'
 		});
+
 		$('.select_datatable').click(function(){
 			self.fnShowHide($(this).attr('my-column'), $(this).children());
 		});
 
 		$('#hostgroup_list').dataTable({
-			"bLengthChange" : false,
-			"bPaginate": true,
-			"iDisplayLength" : 25,
+			"bPaginate": false,
 			"bFilter": false,
 			"bInfo": false,
 			"bStateSave": true,
 			"aoColumnDefs" : [ {
 				"bSortable" : false,
 				"aTargets" : [ "no-sort" ]
-			}]
+			} ],
+			"fnInitComplete" : function(dtObject){
+				var vCols = [];
+				var $checkboxObjects = $('.select_datatable');
+
+				//Enable all checkboxes
+				$('.select_datatable').find('input').prop('checked', true);
+
+				$.each(dtObject.aoColumns, function(count){
+					if(dtObject.aoColumns[count].bVisible == false){
+						//Uncheck checkboxes of hidden colums
+						$checkboxObjects.each(function(intKey, object){
+							var $object = $(object);
+							if($object.attr('my-column') == count){
+								var $input = $(object).find('input');
+								$input.prop('checked', false);
+							}
+						});
+					}
+				});
+
+			}
 		});
 
 		this.$table = $('#hostgroup_list');
-
-		//Checkboxen aktivieren
-		$('.select_datatable').find('input').prop('checked', true);
 
 	},
 	fnShowHide: function( iCol, inputObject){
 		/* Get the DataTables object again - this is not a recreation, just a get of the object */
 		var oTable = this.$table.dataTable();
-
 		var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
 		if(bVis == true){
 			inputObject.prop('checked', false);
@@ -71,5 +91,19 @@ App.Controllers.HostgroupsIndexController = Frontend.AppController.extend({
 			inputObject.prop('checked', true);
 		}
 		oTable.fnSetColumnVis( iCol, bVis ? false : true );
+		// updating global index
+		var changedLocalStorage = localStorage.getItem(this.getCurrentStorageIndex());
+		localStorage.setItem(this.getIndexGlobal(), changedLocalStorage);
+	},
+	getCurrentStorageIndex: function(){
+		var mainPart = this.getIndexBeginning();
+		var localStorageIn = window.location.href.replace(appData.webroot, mainPart);
+		return localStorageIn;
+	},
+	getIndexBeginning: function (){
+		return 'DataTables_hostgroup_list_/';
+	},
+	getIndexGlobal: function(){
+		return this.getIndexBeginning() + 'storageMainHolderUnique';
 	}
 });

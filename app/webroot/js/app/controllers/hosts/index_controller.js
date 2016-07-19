@@ -33,6 +33,10 @@ App.Controllers.HostsIndexController = Frontend.AppController.extend({
 	
 	_initialize: function(){
 		var self = this;
+
+		// getting from global index
+		localStorage.setItem(self.getCurrentStorageIndex(), localStorage.getItem(self.getIndexGlobal()));
+
 		this.Masschange.setup({
 			'controller': 'hosts',
 			'group': 'hostgroups'
@@ -192,5 +196,19 @@ App.Controllers.HostsIndexController = Frontend.AppController.extend({
 			inputObject.prop('checked', true);
 		}
 		oTable.fnSetColumnVis( iCol, bVis ? false : true );
+		// updating global index
+		var changedLocalStorage = localStorage.getItem(this.getCurrentStorageIndex());
+		localStorage.setItem(this.getIndexGlobal(), changedLocalStorage);
+	},
+	getCurrentStorageIndex: function(){
+		var mainPart = this.getIndexBeginning();
+		var localStorageIn = window.location.href.replace(appData.webroot, mainPart);
+		return localStorageIn;
+	},
+	getIndexBeginning: function (){
+		return 'DataTables_host_list_/';
+	},
+	getIndexGlobal: function(){
+		return this.getIndexBeginning() + 'storageMainHolderUnique';
 	}
 });

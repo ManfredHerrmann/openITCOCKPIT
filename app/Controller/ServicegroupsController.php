@@ -134,7 +134,7 @@ class ServicegroupsController extends AppController{
 			unset($query['limit']);
 			$all_servicegroups = $this->Servicegroup->find('all', $query);
 		}else{
-			$this->Paginator->settings = $query;
+			$this->Paginator->settings = Hash::merge($this->Paginator->settings, $query);;
 			$all_servicegroups = $this->Paginator->paginate();
 			$all_servicegroups = Hash::merge([], Set::combine($all_servicegroups, '{n}.Servicegroup.id', '{n}.{(Servicegroup|Container)}'), Set::combine($all_servicegroups, '{n}.Service.id', '{n}.{(Service$|Servicetemplate|Host)}', '{n}.Servicegroup.id'));
 		}

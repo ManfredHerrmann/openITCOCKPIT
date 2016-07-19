@@ -74,16 +74,15 @@ class HostgroupsController extends AppController{
 				'Container.parent_id' => $this->MY_RIGHTS
 			],
 		];
+		$query = Hash::merge($this->Paginator->settings, $options);
 
-//		$query = Hash::merge($this->Paginator->settings, $options);
-
-//		if($this->isApiRequest()){
-//			unset($query['limit']);
-			$all_hostgroups = $this->Hostgroup->find('all', $options);
-//		}else{
-//			$this->Paginator->settings = array_merge($this->Paginator->settings, $query);
-//			$all_hostgroups = $this->Paginator->paginate();
-//		}
+		if($this->isApiRequest()){
+			unset($query['limit']);
+			$all_hostgroups = $this->Hostgroup->find('all', $query);
+		}else{
+			$this->Paginator->settings = array_merge($this->Paginator->settings, $query);
+			$all_hostgroups = $this->Paginator->paginate();
+		}
 
 
 		$this->set('all_hostgroups', $all_hostgroups);

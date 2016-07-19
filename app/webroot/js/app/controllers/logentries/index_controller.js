@@ -27,6 +27,10 @@ App.Controllers.LogentriesIndexController = Frontend.AppController.extend({
 
     _initialize: function () {
         var self = this;
+
+        // getting from global index
+        localStorage.setItem(self.getCurrentStorageIndex(), localStorage.getItem(self.getIndexGlobal()));
+        
         $('.select_datatable').click(function () {
             self.fnShowHide($(this).attr('my-column'), $(this).children());
         });
@@ -40,13 +44,32 @@ App.Controllers.LogentriesIndexController = Frontend.AppController.extend({
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": ["no-sort"]
-            }]
+            }],
+            "fnInitComplete" : function(dtObject){
+                var vCols = [];
+                var $checkboxObjects = $('.select_datatable');
+
+                //Enable all checkboxes
+                $('.select_datatable').find('input').prop('checked', true);
+
+                $.each(dtObject.aoColumns, function(count){
+                    if(dtObject.aoColumns[count].bVisible == false){
+                        //Uncheck checkboxes of hidden colums
+                        $checkboxObjects.each(function(intKey, object){
+                            var $object = $(object);
+                            if($object.attr('my-column') == count){
+                                var $input = $(object).find('input');
+                                $input.prop('checked', false);
+                            }
+                        });
+                    }
+                });
+
+            }
         });
 
         this.$table = $('#logentries_list');
 
-        //Mark checkbox as checked
-        $('.select_datatable').find('input').prop('checked', true);
 
         /*
          * Bind listoptions events
@@ -110,5 +133,19 @@ App.Controllers.LogentriesIndexController = Frontend.AppController.extend({
             inputObject.prop('checked', true);
         }
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
+        // updating global index
+        var changedLocalStorage = localStorage.getItem(this.getCurrentStorageIndex());
+        localStorage.setItem(this.getIndexGlobal(), changedLocalStorage);
+    },
+    getCurrentStorageIndex: function(){
+        var mainPart = this.getIndexBeginning();
+        var localStorageIn = window.location.href.replace(appData.webroot, mainPart);
+        return localStorageIn;
+    },
+    getIndexBeginning: function (){
+        return 'DataTables_logentries_list_/';
+    },
+    getIndexGlobal: function(){
+        return this.getIndexBeginning() + 'storageMainHolderUnique';
     }
 });
