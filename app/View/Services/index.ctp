@@ -121,8 +121,8 @@
 												endif;
 											endif;
 										endif;
-										
-										
+
+
 										if($tmp_host_name != $service['Host']['name']):
 											$tmp_host_name = $service['Host']['name'];
 										?>
@@ -148,7 +148,7 @@
 
 										<?php endif; ?>
 											<tr>
-												
+
 												<?php
 												if($service['Service']['name'] !== null && $service['Service']['name'] !== ''):
 													$serviceName = $service['Service']['name'];
@@ -156,7 +156,7 @@
 													$serviceName = $service['Servicetemplate']['name'];
 												endif;
 												?>
-												
+
 												<td class="text-center width-5">
 													<?php if($allowEdit):?>
 														<input type="checkbox" class="massChange" servicename="<?php echo h($serviceName); ?>" value="<?php echo $service['Service']['id']; ?>" uuid="<?php echo $service['Service']['uuid']; ?>" host-uuid="<?php echo $service['Host']['uuid']; ?>">
@@ -282,7 +282,7 @@
 							<div class="col-xs-12 col-md-2">
 								<?php if($this->Acl->hasPermission('delete')):?>
 									<a href="javascript:void(0);" id="deleteAll" class="txt-color-red" style="text-decoration: none;"> <i class="fa fa-lg fa-trash-o"></i> <?php echo __('Delete'); ?></a>
-								<?php endif; ?> 
+								<?php endif; ?>
 							</div>
 							<div class="col-xs-12 col-md-2">
 								<div class="btn-group">

@@ -62,7 +62,6 @@ class ListFilterHelper extends AppHelper {
 		if(empty($options)) {
 			$options = $this->filters['field'];
 		}
-		if(!$options['showFormField']) continue;
 
 		$ret = '';
 		if(isset($options['hidden'])){
