@@ -162,11 +162,14 @@ class ListFilterHelper extends AppHelper {
 							$checkedAsArray = $this->_View->viewVars[$field];
 						}
 
-
+//debug($checkedAsArray);
 						foreach($options['options'] as $key => $checkbox){
 							$checked = '';
 							//debug($this->request->params['named'][$checkbox['data']][$key]);
 							if(isset($checkbox['data']) && (isset($this->request->params['named'][$checkbox['data']][$key]))){
+							//	debug($this->request->params);
+							//	debug($this->request->params['named']);
+							//	debug($this->request->params['named'][$checkbox['data']][$key]);
 								if($this->request->params['named'][$checkbox['data']][$key] == 1){
 									$checked = 'checked';
 								}
